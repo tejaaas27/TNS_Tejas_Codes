@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Music Player</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="search-bar-top">
+    <form class="search-bar" onsubmit="return false;">
+      <input type="text" id="searchInput" placeholder="Search for a song..." aria-label="Search for a song" />
+      <button id="searchBtn" type="button" aria-label="Search">
+        <svg class="icon" viewBox="0 0 24 24">
+          <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+        </svg>
+      </button>
+    </form>
+  </div>
+  
+  <div class="player-layout">
+    <aside class="sidebar" role="navigation" aria-label="Music Player Navigation">
+      <div class="playlist-section">
+        <h3>
+          <svg class="icon" viewBox="0 0 24 24">
+            <path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/>
+          </svg>
+          Playlist
+        </h3>
+        <ul id="playlist" role="list"></ul>
+      </div>
+      <div class="extra-sections">
+        <div class="favorites">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+            Favorites
+          </h3>
+          <ul id="favorites-list" role="list"></ul>
+        </div>
+        <div class="recent">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+              <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+            </svg>
+            Recently Played
+          </h3>
+          <ul id="recent-list" role="list"></ul>
+        </div>
+      </div>
+    </aside>
+    
+    <main class="main-player" role="main">
+      <div class="card now-playing-card">
+        <div class="bg"></div>
+        <div class="blob"></div>
+        <div class="now-playing-content">
+          <div id="album-art-container">
+            <img id="album-art" src="assets/images/default-album.jpg" alt="Album Art" style="display: none;" />
+            <div id="default-music-logo" class="music-logo">
+              <svg viewBox="0 0 120 120" width="120" height="120">
+                <defs>
+                  <linearGradient id="musicGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#ff7300;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#ff4800;stop-opacity:1" />
+                  </linearGradient>
+                </defs>
+                <circle cx="60" cy="60" r="55" fill="url(#musicGradient)" stroke="#fff" stroke-width="3"/>
+                <path d="M45 35 L45 75 C45 80 40 85 35 85 C30 85 25 80 25 75 C25 70 30 65 35 65 C37 65 39 66 40 67 L40 45 L75 35 L75 65 C75 70 70 75 65 75 C60 75 55 70 55 65 C55 60 60 55 65 55 C67 55 69 56 70 57 L70 25 L45 35 Z" fill="white"/>
+                <circle cx="60" cy="60" r="8" fill="white" opacity="0.3"/>
+              </svg>
+            </div>
+          </div>
+          <div class="song-details">
+            <h2 id="song-title">Select a Song</h2>
+            <p id="song-artist">Choose from playlist</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="controls">
+        <button id="prevBtn" title="Previous" aria-label="Previous Song">
+          <svg class="icon" viewBox="0 0 24 24">
+            <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+          </svg>
+        </button>
+        <button id="playPauseBtn" title="Play/Pause" aria-label="Play/Pause">
+          <svg class="icon play-icon" viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+          <svg class="icon pause-icon" viewBox="0 0 24 24" style="display: none;">
+            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+          </svg>
+        </button>
+        <button id="nextBtn" title="Next" aria-label="Next Song">
+          <svg class="icon" viewBox="0 0 24 24">
+            <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="progress-container">
+        <span id="current-time">0:00</span>
+        <input type="range" id="seek-bar" value="0" min="0" max="1" step="0.01" aria-label="Seek Bar" />
+        <span id="total-duration">0:00</span>
+      </div>
+      
+      <div class="volume-control">
+        <svg class="icon" viewBox="0 0 24 24">
+          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+        </svg>
+        <input type="range" id="volume-bar" min="0" max="1" step="0.01" value="0.7" aria-label="Volume Control" />
+      </div>
+    </main>
+  </div>
+  
+  <audio id="audio-player" src="" aria-hidden="true"></audio>
+  </body>
+</html>
